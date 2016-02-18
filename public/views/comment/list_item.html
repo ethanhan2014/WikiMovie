@@ -1,0 +1,27 @@
+<section data-ng-controller="CommentController" ng-init="initInfo(); initParams(); listItems();">
+    <div class="container">
+        <hgroup>
+            <h1>Showing comments for <a href="/#!/{{item.type}}/{{item.id}}">{{item.name}}</a></h1>
+            <h2 class="lead"><strong class="text-danger">{{totalResults}}</strong> comment(s) are available for this item.</h2>
+        </hgroup>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <div ng-repeat="result in commentData" class="comment_list">
+                <hgroup class="list-result row">
+                    <div>
+                        <p class="comment_text">{{result.content}}</p>
+                    </div>
+                    <span>
+                        Submitted by <a href="/#!/user/{{result.user_id}}">{{result.Author.name || result.Author.username}}</a> on {{result.timestamp | date:'medium'}}
+                    </span>
+                    <span ng-show="result.user_id == global.user.user_id">
+                      &nbsp;<a href="/#!/comment/{{result.comment_id}}/edit">Edit</a>
+                      &nbsp;<a href="" ng-click="delete()">Delete</a>
+                    </span>
+                    <span class="clearfix border"></span>
+                </hgroup>
+            </div>
+        </section>
+        <!-- Total results isn't immediately available when the page loads, use data-ng-if to defer initialisation until it is available. -->
+        <uib-pagination data-ng-if="totalResults" total-items="totalResults" ng-model="listPage" items-per-page="resultsPerPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false" ng-change="setItemPage()"></uib-pagination>
+    </div>
+</section>

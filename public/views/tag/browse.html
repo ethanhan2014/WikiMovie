@@ -1,0 +1,32 @@
+<section data-ng-controller="TagController" ng-init="fetchName(); fetchMovies()">
+    <div class="container">
+        <hgroup class="mb20">
+            <h1>Showing <strong class="text-danger">{{totalResults || 0}}</strong> movies for {{tag.tag | capitalize}}</h1>
+        </hgroup>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <div ng-repeat="result in browseResults">
+                <article class="search-result row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 search-img">
+                        <a href="/#!/movie/{{result.movie_id}}" title="Lorem ipsum" class="thumbnail">
+                        <img ng-src="{{result.Movie.image_url || moviePlaceholder}}" alt="Movie Poster" /></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2">
+                        <ul class="meta-search">
+                            <li data-ng-show="result.Movie.release_date"><i class="fa fa-calendar"></i>
+                                <span>{{result.Movie.release_date | date}}</span></li>
+                            <li data-ng-show="result.Movie.duration"><i class="fa fa-clock-o"></i><span>{{result.Movie.duration}}</span></li>
+                            <li data-ng-show="result.Movie.tmdb_rating">(TMDB) Rating: <span>{{result.Movie.tmdb_rating}}/10</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3><a href="/#!/movie/{{result.movie_id}}" title="">{{result.Movie.title}}</a> <span ng-show="result.relevance">({{result.relevance | percentage:2}} relevance)</span></h3>
+                        <p>{{result.Movie.description}}</p>
+                    </div>
+                    <span class="clearfix border"></span>
+                </article>
+            </div>
+        </section>
+        <!-- Total results isn't immediately available when the page loads, use data-ng-if to defer initialisation until it is available. -->
+        <uib-pagination data-ng-if="totalResults" total-items="totalResults" ng-model="browsePage" items-per-page="searchResultsPerPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false" ng-change="setPage()"></uib-pagination>
+    </div>
+</section>

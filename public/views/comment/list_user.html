@@ -1,0 +1,22 @@
+<section data-ng-controller="CommentController" ng-init="initParams(); userProfile(); listUser();">
+    <div class="container">
+        <hgroup>
+            <h1>Showing <strong class="text-danger">{{totalResults}}</strong> comment(s) for {{userProfile.name || userProfile.username}}</h1>
+        </hgroup>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <div ng-repeat="result in commentData" class="comment_list">
+                <hgroup class="list-result row">
+                    <div>
+                        <p class="comment_text">{{result.content}}</p>
+                    </div>
+                    <h3>
+                        Submitted for <a href="/#!/{{result.Subject.type}}/{{result.item_id}}">{{result.Subject.name}}</a> on {{result.timestamp | date:'medium'}}
+                    </h3>
+                    <span class="clearfix border"></span>
+                </hgroup>
+            </div>
+        </section>
+        <!-- Total results isn't immediately available when the page loads, use data-ng-if to defer initialisation until it is available. -->
+        <uib-pagination data-ng-if="totalResults" total-items="totalResults" ng-model="listPage" items-per-page="resultsPerPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false" ng-change="setUserPage()"></uib-pagination>
+    </div>
+</section>

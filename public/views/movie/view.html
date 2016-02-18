@@ -1,0 +1,130 @@
+<section data-ng-controller="MovieController" data-ng-init="findOne()">
+    <div class='card' itemscope itemtype="http://schema.org/Movie">
+        <div class='card_left'>
+            <div ng-show="movie.image_url != null">
+                <img ng-src="{{movie.image_url}}" itemprop="image" />
+            </div>
+        </div>
+        <div class='card_right'>
+            <h1 itemprop="name">{{movie.title}}</h1>
+            <div class='card_right__details'>
+                <ul>
+                    <li> <strong>Release Date: &nbsp; </strong><span itemprop="datePublished">{{movie.release_date | date}}</span></li>
+                    <li>
+                        <div ng-show="movie.duration != 0">
+                            <strong>Duration: </strong><span itemprop="duration" datetime="PT{{movie.duration}}M">{{movie.duration}} minutes</span>
+                        </div>
+                    </li>
+                    <div>
+                        <strong>Tags: </strong>
+                        <ul>
+                            <li ng-repeat="tag in tags"><a href="/#!/tag/browse/{{tag.tag_id}}"><span itemprop="genre">{{tag.tag | capitalize}}</span></a>
+                                <span ng-show="tag.Tagged[0].Tag_Belongs.relevance !== null">({{tag.Tagged[0].Tag_Belongs.relevance}})</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Studio(s)</strong>
+                        <ul>
+                            <li ng-repeat="studio in creators">
+                                <a href="/#!/studio/{{studio.item_id}}"><span itemprop="productionCompany" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">{{studio.name}}</span></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Cast</strong>
+                        <ul>
+                            <li ng-repeat="c in cast">
+                                <a href="/#!/person/{{c.item_id}}"><span itemprop="actor" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{c.name}}</span></span> - <span itemprop="character">{{c.role_name}}</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Crew</strong>
+                        <ul>
+                            <li ng-repeat="c in crew">
+                                <a href="/#!/person/{{c.item_id}}"><span itemprop="contributor" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{c.name}}</span></span> - {{c.role_name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card_right__visualize" ng-show="movie.tmdb_id" style="margin-top: 10px">
+                        <a href="/#!/movie/{{movie.item_id}}/visualize">Visualize movie/actor relations</a>
+                    </div>
+                    <li>
+                        <div ng-show="movie.rt_critic_rating > 0">
+                            <strong>Rotten Tomatoes Critic Rating: &nbsp;</strong> {{movie.rt_critic_rating}}/100
+                        </div>
+                        <div ng-show="movie.tmdb_rating > 0">
+                            <strong>TMDB Rating: &nbsp;</strong> {{movie.tmdb_rating}}/10
+                        </div>
+                        <div ng-show="movie.rt_audience_rating > 0">
+                            <strong>Rotten Tomatoes Audience Rating: &nbsp;</strong> {{movie.rt_audience_rating}}/100
+                        </div>
+                    </li>
+
+                </ul>
+                <!-- <div class='card_right__rating'>
+                    <div class='card_right__rating__stars'>
+                        <fieldset class='rating'>
+                            <input id='star10' name='rating' type='radio' value='10'>
+                            <label class='full' for='star10' title='10 stars'></label>
+                            <input id='star9half' name='rating' type='radio' value='9 and a half'>
+                            <label class='half' for='star9half' title='9.5 stars'></label>
+                            <input id='star9' name='rating' type='radio' value='9'>
+                            <label class='full' for='star9' title='9 stars'></label>
+                            <input id='star8half' name='rating' type='radio' value='8 and a half'>
+                            <label class='half' for='star8half' title='8.5 stars'></label>
+                            <input id='star8' name='rating' type='radio' value='8'>
+                            <label class='full' for='star8' title='8 stars'></label>
+                            <input id='star7half' name='rating' type='radio' value='7 and a half'>
+                            <label class='half' for='star7half' title='7.5 stars'></label>
+                            <input id='star7' name='rating' type='radio' value='7'>
+                            <label class='full' for='star7' title='7 stars'></label>
+                            <input id='star6half' name='rating' type='radio' value='6 and a half'>
+                            <label class='half' for='star6half' title='6.5 stars'></label>
+                            <input id='star6' name='rating' type='radio' value='6'>
+                            <label class='full' for='star6' title='6 star'></label>
+                            <input id='star5half' name='rating' type='radio' value='5 and a half'>
+                            <label class='half' for='star5half' title='5.5 stars'></label>
+                            <input id='star5' name='rating' type='radio' value='5'>
+                            <label class='full' for='star5' title='5 stars'></label>
+                            <input id='star4half' name='rating' type='radio' value='4 and a half'>
+                            <label class='half' for='star4half' title='4.5 stars'></label>
+                            <input id='star4' name='rating' type='radio' value='4'>
+                            <label class='full' for='star4' title='4 stars'></label>
+                            <input id='star3half' name='rating' type='radio' value='3 and a half'>
+                            <label class='half' for='star3half' title='3.5 stars'></label>
+                            <input id='star3' name='rating' type='radio' value='3'>
+                            <label class='full' for='star3' title='3 stars'></label>
+                            <input id='star2half' name='rating' type='radio' value='2 and a half'>
+                            <label class='half' for='star2half' title='2.5 stars'></label>
+                            <input id='star2' name='rating' type='radio' value='2'>
+                            <label class='full' for='star2' title='2 stars'></label>
+                            <input id='star1half' name='rating' type='radio' value='1 and a half'>
+                            <label class='half' for='star1half' title='1.5 stars'></label>
+                            <input id='star1' name='rating' type='radio' value='1'>
+                            <label class='full' for='star1' title='1 star'></label>
+                            <input id='starhalf' name='rating' type='radio' value='half'>
+                            <label class='half' for='starhalf' title='0.5 stars'></label>
+                        </fieldset>
+                    </div>
+                </div> -->
+                <div class='card_right__review'>
+                    <p>{{movie.description}}</p>
+                    <div class='card_right__comment'>
+                        <a href="/#!/movie/{{movie.item_id}}/comment/create" data-ng-show="global.authenticated">Add a comment!</a>
+                        <a href="/#!/movie/{{movie.item_id}}/comment/list">Show comments</a>
+                    </div>
+                </div>
+                <div class='card_right__button'>
+                    <a ng-href='http://www.bing.com/search?q={{movie.title}}' target='_blank'>See results from Bing Search</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div id="map"></div>
+    <script type="text/javascript" src="../../lib/d3/d3.js"></script>
+    <script type="text/javascript" src="../../lib/webcola/cola.js"></script>
+    <script type="text/javascript" src="../../js/tmdb.js"/>
+    <script type="text/javascript" src="../../js/map.js"/> -->
+</section>

@@ -1,0 +1,20 @@
+<section data-ng-controller="CommentController" data-ng-init="fetchComment()">
+    <div class="col-sm-offset-2">
+        <h1>Editing comment on <a href="/#!/{{comment.Subject.type}}/{{comment.item_id}}">{{comment.Subject.name}}</a></h1>
+    </div>
+    <form class="form-horizontal" role="form" data-ng-submit="update()">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="comment_content">Content</label>
+            <div class="col-sm-10">
+                <textarea data-ng-model="comment_content" maxlength="1000" rows="10"
+                    class="form-control" id="comment_content" placeholder="Content">
+                </textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Update" class="btn btn-default">
+            </div>
+        </div>
+    </form>
+</section>

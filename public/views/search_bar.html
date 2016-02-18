@@ -1,0 +1,85 @@
+<section ng-controller="SearchController" id="searchController" ng-init="initParams()">
+
+    <div class="searchbox">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-4">
+                    <!-- <img src="../img/logo.png" height="247" width="400"> -->
+                    <h1 class="movielogo"><a href="/#!/"> WIKIMOVIE</a></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form ng-submit="performSearch()">
+                        <div class="input-group">
+                            <div class="input-group-btn search-panel">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span id="search_concept">{{(searchParam | capitalize) || "Choose"}}</span> <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-click="searchParam = 'movie';"><a href="">Movie</a></li>
+                                    <li class="divider"></li>
+                                    <li ng-click="searchParam = 'person';"><a href="">Person</a></li>
+                                </ul>
+                            </div>
+                            <input id="search_textfield" type="text" class="form-control" name="x" placeholder="Search ..." ng-model="searchQuery" uib-typeahead="entry for entry in autocomplete($viewValue)" />
+                            <i id="speech_button" class="fa fa-microphone speech_inactive"></i>
+                            <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" ng-disabled="!(searchParam && searchQuery)"><i class="fa fa-search"></i></button>
+                            </span>
+
+                            <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button" ng-click="redirectRandom()" ng-disabled="!(searchParam)">I Feel Lucky</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            // Only show the speech recognition icon if support is available.
+            if ('webkitSpeechRecognition' in window) {
+                // Credit to: https://www.google.com/intl/en/chrome/demos/speech.html
+                var recognition = new webkitSpeechRecognition();
+                var textField = $('#search_textfield');
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.onresult = function(event) {
+                    if (typeof(event.results) == 'undefined') {
+                      recognition.onend = null;
+                      recognition.stop();
+                      upgrade();
+                      return;
+                    }
+                    for (var i = event.resultIndex; i < event.results.length; ++i) {
+                      if (event.results[i].isFinal) {
+                        var speechText = event.results[i][0].transcript;
+                        var currentVal = textField.val();
+                        if (!currentVal.endsWith(" ") && !speechText.startsWith(" "))
+                            currentVal += " ";
+                        currentVal += speechText;
+                        textField.val(currentVal);;
+                        textField.trigger('input');
+                      }
+                    }
+                };
+
+                $('#speech_button').data('active', false).show().click(function() {
+                    var active = $(this).data('active');
+
+                    if (!active) {
+                        $(this).addClass('speech_active').removeClass('speech_inactive');
+                        recognition.start();
+                    } else {
+                        $(this).addClass('speech_inactive').removeClass('speech_active');
+                        recognition.stop();
+                    }
+
+                    $(this).data('active', !active);
+                });
+            }
+        });
+    </script>
+</section>

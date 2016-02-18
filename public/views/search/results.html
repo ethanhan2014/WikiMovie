@@ -1,0 +1,33 @@
+<section data-ng-controller="SearchController" ng-init="initParams(); getResults();">
+    <div class="container">
+        <hgroup class="mb20">
+            <h1>Search Results</h1>
+            <h2 class="lead"><strong class="text-danger">{{totalResults}}</strong> result(s) were found for the search for <strong class="text-danger">{{searchQuery}}</strong></h2>
+        </hgroup>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <div ng-repeat="result in searchResults">
+                <article class="search-result row">
+                    <div class="col-xs-12 col-sm-12 col-md-3 search-img">
+                        <a href="/#!/{{searchParam}}/{{result.item_id}}" title="Lorem ipsum" class="thumbnail">
+                        <img ng-src="{{result.image_url || moviePlaceholder}}" alt="Movie Poster" /></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-2">
+                        <ul class="meta-search">
+                            <li data-ng-show="result.birth_date || result.release_date"><i class="fa fa-calendar"></i>
+                                <span>{{result.birth_date | date}} {{result.release_date | date}}</span></li>
+                            <li data-ng-show="result.duration"><i class="fa fa-clock-o"></i><span>{{result.duration}}</span></li>
+                            <li data-ng-show="result.tmdb_rating">(TMDB) Rating: <span>{{result.tmdb_rating}}/10</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                        <h3><a href="/#!/{{searchParam}}/{{result.item_id}}" title="">{{result.name}}</a></h3>
+                        <p>{{result.biography}} {{result.description}}</p>
+                    </div>
+                    <span class="clearfix border"></span>
+                </article>
+            </div>
+        </section>
+        <!-- Total results isn't immediately available when the page loads, use data-ng-if to defer initialisation until it is available. -->
+        <uib-pagination data-ng-if="totalResults" total-items="totalResults" ng-model="searchPage" items-per-page="searchResultsPerPage" max-size="10" class="pagination-sm" boundary-links="true" rotate="false" ng-change="setPage()"></uib-pagination>
+    </div>
+</section>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml"
+  itemscope="itemscope">
+  <% include ../includes/head %>
+  <body>
+    <div id="loader"></div>
+    <div class="navbar navbar-inner navbar-fixed-top" data-ng-include="'/views/header.html'" data-role="navigation"></div>
+    <% if (typeof show_search !== "undefined" && show_search) { %>
+      <div data-ng-include="'/views/search_bar.html'"></div>
+    <% } %>
+    <section class="content">
+      <section class="container">
+        <%- body %>
+      </section>
+    </section>
+    <% include ../includes/foot %>
+    <script>
+      // Window load requires waiting for images to load.
+       $(document).ready(function(){
+       $("#loader").fadeOut("slow");
+       });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+{
+    // This is your MYSQL Database configuration
+    db: {
+        name: 
+        password:
+        username: 
+        host: 
+        port: 
+    },
+    app: {
+        name: "WikiMovie - CIS550 - Development"
+    },
+    // You will need to get your own client id's before this will work properly
+    facebook: {
+        clientID: 
+        clientSecret: 
+        callbackURL: 
+    },
+    twitter: {
+        clientID: 
+        clientSecret: 
+        callbackURL: 
+    },
+    google: {
+        clientID: 
+        clientSecret: 
+        callbackURL: 
+    }
+}

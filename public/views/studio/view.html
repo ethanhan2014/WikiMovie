@@ -1,0 +1,35 @@
+<section data-ng-controller="StudioController" data-ng-init="findOne()">
+    <div class='card' itemscope itemtype="http://schema.org/Organization">
+        <div class='card_left'>
+            <div ng-show="studio.logo_url != null">
+                <img src="{{studio.logo_url}}" itemprop="logo" />
+            </div>
+        </div>
+        <div class='card_right'>
+            <h1 itemprop="name">{{studio.name}}</h1>
+            <div class='card_right__details'>
+                <ul>
+                    <li><strong>Location: </strong><span itemprop="location">{{studio.location}}</span></li>
+                    <div>
+                        <strong>Top Movie(s)</strong>
+                        <ul>
+                            <li ng-repeat="movie in studio.movies">
+                                <a href="/#!/movie/{{movie.item_id}}"><span itemprop="owns" itemscope itemtype="http://schema.org/Product"><span itemprop="name">{{movie.title}}</span></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
+                <div class='card_right__review'>
+                    <p ng-show="studio.description" itemprop="description">{{studio.description}}</p>
+                    <div class='card_right__comment'>
+                        <a href="/#!/studio/{{studio.item_id}}/comment/create" data-ng-show="global.authenticated">Add a comment!</a>
+                        <a href="/#!/studio/{{studio.item_id}}/comment/list">Show comments</a>
+                    </div>
+                </div>
+                <div class='card_right__button'>
+                    <a ng-href='http://www.bing.com/search?q={{studio.name}}' target='_blank'>See results from Bing Search</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,30 @@
+{
+    PORT: 3001,
+    // This is your MYSQL test database configuration
+    db: {
+        name: "cis550test",
+        password: 
+        username: 
+        host: "localhost",
+        port: 3306
+    },
+    app: {
+        name: "WikiMovie - CIS550 - Test"
+    },
+    // You will need to get your own client id's before this will work properly
+    facebook: {
+        clientID: 
+        clientSecret: 
+        callbackURL: "http://localhost:3000/auth/facebook/callback"
+    },
+    twitter: {
+        clientID:
+        clientSecret: 
+        callbackURL: "http://127.0.0.1:3000/auth/twitter/callback/"
+    },
+    google: {
+        clientID: 
+        clientSecret: 
+        callbackURL: "http://localhost:3000/auth/google/callback"
+    }
+}

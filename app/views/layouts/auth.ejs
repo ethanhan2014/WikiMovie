@@ -1,0 +1,23 @@
+<% layout('layouts/layout') %>
+<div class="row">
+  <div class="col-md-6">
+    <a href="/auth/facebook">
+      <img src="/img/icons/facebook.png" />
+    </a>
+    <a href="/auth/twitter">
+      <img src="/img/icons/twitter.png" />
+    </a>
+    <a href="/auth/google">
+      <img src="/img/icons/google.png" />
+    </a>
+  </div>
+  <div class="col-md-6">
+    <% if (typeof message !== 'undefined' && message && message.length) { %>
+    <div class="fade in alert alert-error">
+      <button class="close" type="button" data-dismiss="alert">&times;</button>
+        <strong><%= message %></strong>
+    </div>
+    <% } %>
+    <%- body %>
+  </div>
+</div>

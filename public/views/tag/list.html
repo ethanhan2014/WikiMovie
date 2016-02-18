@@ -1,0 +1,16 @@
+<section data-ng-controller="TagController" ng-init="fetchList()">
+    <div class="container">
+        <hgroup>
+            <h1 style="font-size: 3em">Top {{numTopTags}} Tags</h1>
+        </hgroup>
+        <section class="col-xs-12 col-sm-6 col-md-12">
+            <div class="container">
+            <div ng-repeat="tag in tagResults">
+                <article class="row">
+                    <h2>{{$index + 1}}. <a href="/#!/tag/browse/{{tag.tag_id}}">{{tag.tag | capitalize}}</a> ({{tag.gen_count}} movies)</h2>
+                </article>
+            </div>
+            </div>
+        </section>
+    </div>
+</section>
